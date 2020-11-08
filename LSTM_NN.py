@@ -11,7 +11,7 @@ def create_emb_layer(weights_matrix, non_trainable=False):
 
 class LSTM_NN(nn.Module):
     
-    def __init__(self,weights_matrix, output_size, hidden_size, n_layers, drop_prob=0.5):
+    def __init__(self,weights_matrix, output_size, hidden_size, n_layers,drop_prob=0.5):
         super(LSTM_NN, self).__init__()
         self.output_size = output_size
         self.n_layers = n_layers
@@ -30,18 +30,18 @@ class LSTM_NN(nn.Module):
         return hidden
 
     def forward(self,x, hidden):
-        batch_size = x.size(0)
+        #batch_size = x.size(0)
         x = x.long()
         embeds = self.embed(x)
-        lstm_out, hidden = self.lstm(embeds, hidden)
-        lstm_out=lstm_out.contiguous().view(-1, self.hidden_size)
+        lstm_out, (h_n,cell) = self.lstm(embeds, hidden)
+        lstm_out=lstm_out[:,-1,:]
         
         out = self.dropout(lstm_out)
         out_l1 = self.l1(out)
         sig_out = self.prob(out_l1)
 
-        sig_out = sig_out.view(batch_size, -1)
-        sig_out = sig_out[:, -1]
+        #sig_out = sig_out.view(batch_size, -1)
+        #sig_out = sig_out[:, -1]
         
         
         return sig_out, hidden        

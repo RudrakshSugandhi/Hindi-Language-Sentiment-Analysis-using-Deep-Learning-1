@@ -63,7 +63,7 @@ def train_loop(model,batch_size,optimizer,criterion):
         train_loss=[]
         for i, (sent, label) in enumerate(train_loader):
             h = tuple([e.data for e in h])
-            model.zero_grad()
+            optimizer.zero_grad()
             #print(label.shape)
             output, h = model(sent, h)
             #print(output.shape)

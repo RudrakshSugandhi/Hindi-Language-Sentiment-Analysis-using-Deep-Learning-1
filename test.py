@@ -13,7 +13,7 @@ from data_processing import test_df
 with open("./Intermediate Files/dictionary.pickle", "rb") as input_file:
     dictionary = pickle.load(input_file)
 
-model = LSTM_NN(weights_matrix, CONFIG.output_size, CONFIG.hidden_size, CONFIG.n_layers, drop_prob=0.5)
+model = LSTM_NN(weights_matrix, CONFIG.output_size, CONFIG.hidden_size, CONFIG.n_layers ,drop_prob=0.5)
 optimizer = torch.optim.Adam( model.parameters(), lr=CONFIG.learning_rate)
 criterion=nn.BCELoss()
 checkpoint = torch.load('./Intermediate Files/saved_model.pt')

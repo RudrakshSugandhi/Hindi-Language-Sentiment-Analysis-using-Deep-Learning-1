@@ -12,7 +12,8 @@ with open("./Intermediate Files/dictionary.pickle", "rb") as input_file:
 
 model = LSTM_NN(weights_matrix, CONFIG.output_size, CONFIG.hidden_size, CONFIG.n_layers, drop_prob=0.5)
 
-
+checkpoint = torch.load('./Intermediate Files/saved_model.pt')
+model.load_state_dict(checkpoint['model_state_dict'])
 def predict(model, dictionary,test_review, sequence_length=27):
     
  model.eval()
